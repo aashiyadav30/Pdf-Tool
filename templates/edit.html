@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Editor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/edit.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+        <style>
+           /* Header Styles */
+        .header {
+            background: white;
+            border-bottom: 1px solid #e9ecef;
+            padding: 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .heart {
+            color: #e74c3c;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #666;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        /* .nav-menu a.active {
+            color: #e74c3c;
+            background: #fff5f5;
+        } */
+
+        .nav-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .user-icon, .menu-icon {
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            background: #f8f9fa;
+        }
+         /* Page Heading Styles */
+        .page-heading {
+            text-align: center;
+            margin: 8px 0 20px 0;
+            color: #333;
+            font-size: 28px;
+            font-weight: 600;
+        }
+        .nav-tab.active {
+    color: #e74c3c;
+    border-bottom-color: #e74c3c;
+}
+    </style>
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <nav class="top-nav">
+        <div class="nav-left">
+          <a href="{{ url_for('home') }}" class="logo">PDFToolkit<span class="heart">❤</span></a>
+
+        </div>
+        <div class="nav-center">
+            <div class="nav-menu">
+                <li><a href="{{ url_for('merge_page') }}"  >MERGE PDF</a></li>
+                <li><a href="{{ url_for('split_page') }}">SPLIT PDF</a></li>
+                <li><a href="{{ url_for('compress_page') }}" >COMPRESS PDF</a></li>
+                <li><a href="{{ url_for('edit_page') }}" class="active">EDIT PDF</a></li>
+
+            </div>
+        </div>
+        <div class="nav-right">
+            <button class="btn btn-outline">Save PDF</button>
+            <button class="btn btn-primary">Download</button>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <div class="main-container">
+        <!-- Left Sidebar -->
+        <aside class="sidebar">
+            <!-- File Upload Section -->
+            <div class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">📄</div>
+                    <p class="upload-text">Drop PDF here</p>
+                    <p class="upload-or">or</p>
+                    <button class="btn btn-red" onclick="document.getElementById('pdfInput').click()">
+                        Select PDF files
+                    </button>
+                    <input type="file" id="pdfInput" class="file-input" accept=".pdf" onchange="loadPDF(event)">
+                </div>
+            </div>
+
+            <!-- Tools Section -->
+            <div class="tools-section">
+                <h3>Tools</h3>
+                <div class="tool-grid">
+                    <button class="tool-btn active" id="selectTool" onclick="setTool('select')" title="Select">
+                        <span class="tool-icon">🖱️</span>
+                        <span class="tool-label">Select</span>
+                    </button>
+                    <button class="tool-btn" id="drawTool" onclick="setTool('draw')" title="Draw">
+                        <span class="tool-icon">✏️</span>
+                        <span class="tool-label">Draw</span>
+                    </button>
+                    <button class="tool-btn" id="textTool" onclick="setTool('text')" title="Add Text">
+                        <span class="tool-icon">T</span>
+                        <span class="tool-label">Text</span>
+                    </button>
+                    <button class="tool-btn" id="imageTool" onclick="setTool('image')" title="Add Image">
+                        <span class="tool-icon">🖼️</span>
+                        <span class="tool-label">Image</span>
+                    </button>
+                    <button class="tool-btn" id="eraserTool" onclick="setTool('eraser')" title="Eraser">
+                        <span class="tool-icon">🧽</span>
+                         <span class="tool-label">Eraser</span>
+</button>
+<button class="tool-btn" onclick="undoLast()" title="Undo">
+    <span class="tool-icon">↩️</span>
+    <span class="tool-label">Undo</span>
+</button>
+
+                </div>
+            </div>
+
+            <!-- Properties Panel -->
+            <div class="properties-panel">
+                <h3>Properties</h3>
+                
+                <!-- Drawing Properties -->
+                <div class="property-group" id="drawingProps">
+                    <label>Brush Color</label>
+                    <div class="color-input-wrapper">
+                        <input type="color" id="colorPicker" value="#000000">
+                        <span class="color-label">#000000</span>
+                    </div>
+                    
+                    <label>Brush Size</label>
+                    <div class="slider-wrapper">
+                        <input type="range" id="brushSize" min="1" max="20" value="3">
+                        <span id="sizeValue">3px</span>
+                    </div>
+                    
+                    <label>Opacity</label>
+                    <div class="slider-wrapper">
+                        <input type="range" id="opacity" min="0.1" max="1" step="0.1" value="1">
+                        <span id="opacityValue">100%</span>
+                    </div>
+                </div>
+
+                <!-- Text Properties -->
+                <div class="property-group" id="textProps" style="display: none;">
+                    <label>Font Size</label>
+                    <input type="number" id="fontSize" value="16" min="8" max="72" class="number-input">
+                    
+                    <label>Font Family</label>
+                    <select id="fontFamily" class="select-input">
+                        <option value="Arial">Arial</option>
+                        <option value="Times New Roman">Times New Roman</option>
+                        <option value="Courier New">Courier New</option>
+                        <option value="Helvetica">Helvetica</option>
+                    </select>
+                    
+                    <label>Text Color</label>
+                    <div class="color-input-wrapper">
+                        <input type="color" id="textColor" value="#000000">
+                        <span class="text-color-label">#000000</span>
+                    </div>
+                </div>
+            </div>
+
+            <input type="file" id="imageInput" class="file-input" accept="image/*" onchange="loadImage(event)">
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content-area">
+            <!-- Toolbar -->
+            <div class="toolbar">
+                <div class="toolbar-left">
+                    <div class="page-controls">
+                        <button class="toolbar-btn" onclick="prevPage()" title="Previous Page">
+                            <span>◀</span>
+                        </button>
+                        <span id="pageInfo" class="page-info">Page 1 of 1</span>
+                        <button class="toolbar-btn" onclick="nextPage()" title="Next Page">
+                            <span>▶</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="toolbar-center">
+                    <span class="document-title">Untitled Document</span>
+                </div>
+                
+                <div class="toolbar-right">
+                    <div class="zoom-controls">
+                        <button class="toolbar-btn" onclick="zoomOut()" title="Zoom Out">-</button>
+                        <select id="zoomSelect" class="zoom-select" onchange="setZoom(this.value)">
+                            <option value="0.5">50%</option>
+                            <option value="0.75">75%</option>
+                            <option value="1" selected>100%</option>
+                            <option value="1.25">125%</option>
+                            <option value="1.5">150%</option>
+                            <option value="2">200%</option>
+                            <option value="auto">Automatic Zoom</option>
+                            <option value="fit-width">Fit Width</option>
+                            <option value="fit-page">Fit Page</option>
+                        </select>
+                        <button class="toolbar-btn" onclick="zoomIn()" title="Zoom In">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Canvas Container -->
+            <div class="canvas-container">
+                <div class="canvas-wrapper">
+                    <canvas id="pdfCanvas" class="pdf-canvas"></canvas>
+                </div>
+            </div>
+        </main>
+    </div>
+
+ <script src="{{ url_for('static', filename='js/edit.js') }}"></script>
+</body>
+</html>

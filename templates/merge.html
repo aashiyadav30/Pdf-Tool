@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merge PDF - iLovePDF</title>
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/merge.css') }}">
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+   <style>
+       /* Header Styles */
+        .header {
+            background: white;
+            border-bottom: 1px solid #e9ecef;
+            padding: 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .heart {
+            color: #e74c3c;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #666;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        /* .nav-menu a.active {
+            color: #e74c3c;
+            background: #fff5f5;
+        } */
+
+        .nav-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .user-icon, .menu-icon {
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            background: #f8f9fa;
+        }
+         /* Page Heading Styles */
+        .page-heading {
+            text-align: center;
+            margin: 8px 0 20px 0;
+            color: #333;
+            font-size: 28px;
+            font-weight: 600;
+        }
+   </style>
+
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <a href="{{ url_for('home') }}" class="logo">PDFToolkit</a>
+            
+            <ul class="nav-menu">
+               <li><a href="{{ url_for('merge_page') }}" class="active" >MERGE PDF</a></li>
+                <li><a href="{{ url_for('split_page') }}">SPLIT PDF</a></li>
+                <li><a href="{{ url_for('compress_page') }}" >COMPRESS PDF</a></li>
+                <li><a href="https://pdf-editor.vercel.app/">EDIT PDF</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+       <button class="back-button" onclick="window.location.href='{{ url_for('home') }}'">← Back to Tools</button>
+
+    
+
+        <div id="uploadArea" class="upload-area" onclick="document.getElementById('fileInput').click()">
+            <button class="upload-button">Select PDF files</button>
+            <p class="upload-text">or drop PDFs here</p>
+            <input type="file" id="fileInput" multiple accept=".pdf" style="display: none;" onchange="handleFileSelect(event)">
+        </div>
+
+        <div id="mergeInterface" class="merge-interface">
+            <div class="merge-header">
+                <h2 class="merge-title">Merge PDF</h2>
+                <div id="fileCountInfo" class="file-count-info">0 MB - 0 pages</div>
+            </div>
+            
+            <div class="toolbar">
+                <div class="toolbar-left">
+                    <button class="add-files-btn" onclick="document.getElementById('fileInput').click()">
+                        <span>+</span> Add more files
+                    </button>
+                    
+                    <div class="sort-controls">
+                        <button class="sort-btn" onclick="sortFiles('asc')" title="Sort A-Z">↑↓</button>
+                        <button class="sort-btn active" onclick="sortFiles('original')" title="Original Order">⋮⋮</button>
+                    </div>
+                </div>
+                
+                <div class="toolbar-right">
+                    <span>To change the order of your PDFs, drag and drop the files as you want.</span>
+                </div>
+            </div>
+            
+            <div class="file-workspace">
+                <div class="file-list-container">
+                    <div id="fileGrid" class="file-grid"></div>
+                </div>
+                
+                <div class="merge-panel">
+                    <h3>Merge PDF</h3>
+                    <p class="merge-instructions">
+                        To change the order of your PDFs, drag and drop the files as you want.
+                    </p>
+                    <button id="mergeBtn" class="merge-action-btn" onclick="mergePDFs()" disabled>
+                        Merge PDF <span>➤</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+ <script src="{{ url_for('static', filename='js/merge.js') }}"></script>
+</body>
+</html>

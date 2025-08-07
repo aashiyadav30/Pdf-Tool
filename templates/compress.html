@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compress PDF files - iLovePDF</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/compress.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+           /* Header Styles */
+        .header {
+            background: white;
+            border-bottom: 1px solid #e9ecef;
+            padding: 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .heart {
+            color: #e74c3c;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #666;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        /* .nav-menu a.active {
+            color: #e74c3c;
+            background: #fff5f5;
+        } */
+
+        .nav-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .user-icon, .menu-icon {
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            background: #f8f9fa;
+        }
+         /* Page Heading Styles */
+        .page-heading {
+            text-align: center;
+            margin: 8px 0 20px 0;
+            color: #333;
+            font-size: 28px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+     <!-- Header -->
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <a href="{{ url_for('home') }}" class="logo">PDFToolkit</a>
+            
+            <ul class="nav-menu">
+               <li><a href="{{ url_for('merge_page') }}"  >MERGE PDF</a></li>
+                <li><a href="{{ url_for('split_page') }}">SPLIT PDF</a></li>
+                <li><a href="{{ url_for('compress_page') }}"class="active" >COMPRESS PDF</a></li>
+                <li><a href="https://pdf-editor.vercel.app/">EDIT PDF</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Initial Upload Interface -->
+         <button class="back-button" onclick="window.location.href='{{ url_for('home') }}'">← Back to Tools</button>
+
+
+          <!-- Page Heading -->
+       <h1 class="page-heading">Compress PDFs Here..</h1>
+
+
+        <div class="upload-interface" id="uploadInterface">
+        
+            <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                <button class="upload-button">Select PDF files</button>
+                <p class="upload-text">or drop PDFs here</p>
+               
+            </div>
+            
+            <input type="file" id="fileInput" accept=".pdf" multiple>
+        </div>
+
+        <!-- Compression Interface -->
+        <div class="compression-interface" id="compressionInterface">
+            <div class="files-section">
+                <div class="files-container">
+                    <div class="sort-controls">
+                        <span class="file-counter" id="totalFiles">3</span>
+                        <button class="add-files-btn" onclick="document.getElementById('fileInput').click()">+</button>
+                        <button class="sort-btn">↕</button>
+                    </div>
+                    
+                    <div class="file-grid" id="fileGrid">
+                        <!-- Files will be dynamically added here -->
+                    </div>
+                </div>
+
+                <div class="compression-options">
+                    <h2 class="compression-title">Compression level</h2>
+                    
+                    <div class="compression-option" data-level="extreme">
+                        <div class="option-title">EXTREME COMPRESSION</div>
+                        <div class="option-description">Less quality, high compression</div>
+                    </div>
+                    
+                    <div class="compression-option selected" data-level="recommended">
+                        <div class="option-title">RECOMMENDED COMPRESSION</div>
+                        <div class="option-description">Good quality, good compression</div>
+                    </div>
+                    
+                    <div class="compression-option" data-level="less">
+                        <div class="option-title">LESS COMPRESSION</div>
+                        <div class="option-description">High quality, less compression</div>
+                    </div>
+                    
+                    <button class="compress-final-btn" id="compressBtn">
+                        Compress PDF
+                        <span>▶</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="{{ url_for('static', filename='js/compress.js') }}"></script>
+</body>
+</html>

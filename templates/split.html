@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Split PDF - iLovePDF</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/split.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+             <a href="{{ url_for('home') }}" class="logo">PDFToolkit</a>
+            
+            <ul class="nav-menu">
+               <li><a href="{{ url_for('merge_page') }}"  >MERGE PDF</a></li>
+                <li><a href="{{ url_for('split_page') }}" class="active">SPLIT PDF</a></li>
+                <li><a href="{{ url_for('compress_page') }}" >COMPRESS PDF</a></li>
+                <li><a href="https://pdf-editor.vercel.app/">EDIT PDF</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+       <button class="back-button" onclick="window.location.href='{{ url_for('home') }}'">← Back to Tools</button>
+
+      
+
+
+        <!-- Upload Area -->
+        <div id="uploadArea" class="upload-area" onclick="document.getElementById('splitFileInput').click()">
+            <button class="upload-button">Select PDF files</button>
+            <p class="upload-text">or drop PDFs here</p>
+            <input type="file" id="splitFileInput" accept=".pdf" style="display: none;" onchange="handleSplitFileSelect(event)">
+        </div>
+
+        <!-- Split Interface -->
+        <div id="splitInterface" class="split-interface">
+            <div class="split-header">
+         
+                <div id="fileInfo" class="file-info">2.38 MB - 59 pages</div>
+            </div>
+
+            <div class="split-content">
+                <!-- Main Content Area (Left Side) -->
+                <div class="split-main">
+                    <!-- Range Preview (shown for range mode) -->
+                    <div id="rangePreview" class="range-preview">
+                        <div class="range-item">
+                            <h4>Range 1</h4>
+                            <div class="page-range-display">
+                                <div class="page-preview">PDF Preview</div>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pages Grid (shown for page selection mode) -->
+                    <div id="pagesGrid" class="pages-grid" style="display: none;">
+                        <!-- Pages will be dynamically generated here -->
+                    </div>
+                </div>
+
+                <!-- Sidebar (Right Side) -->
+                <div class="split-sidebar">
+                    <!-- Split Options -->
+                    <div class="split-options">
+                        <div class="split-option active" data-mode="range" onclick="setSplitMode('range')">
+                            <div class="split-option-icon">📄</div>
+                            <h3>Range</h3>
+                            <p>Extract pages by range</p>
+                        </div>
+                        <div class="split-option" data-mode="pages" onclick="setSplitMode('pages')">
+                            <div class="split-option-icon">📋</div>
+                            <h3>Pages</h3>
+                            <p>Select specific pages</p>
+                        </div>
+                
+
+                        
+                    </div>
+
+                    <!-- Range Mode Controls -->
+                    <div id="rangeControls" class="range-controls active">
+                        <div class="range-mode-controls">
+                            <h3>Range mode:</h3>
+                            <div class="mode-buttons">
+                                <button class="mode-btn active" data-range="custom" onclick="setRangeMode('custom')">Custom ranges</button>
+                            
+                            </div>
+
+                            <div id="customRangeInputs" style="margin-top: 20px;">
+                                <div class="range-inputs">
+                                    <label>Range 1</label>
+                                    <span>from page</span>
+                                    <input type="number" class="range-input" value="1" min="1" max="121">
+                                    <span>to</span>
+                                    <input type="number" class="range-input" value="121" min="1" max="121">
+                                </div>
+                                <button class="add-range-btn" onclick="addRange()">+ Add Range</button>
+                            </div>
+
+                           <!-- Add this checkbox somewhere in your split.html template, preferably near the Split PDF button -->
+
+
+
+<!-- Alternative compact version -->
+
+
+<!-- The Split PDF button should be after this checkbox
+<button id="splitBtn" onclick="splitPDF()" style="background: #e74c3c; color: white; padding: 12px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; width: 100%;">
+    Split PDF ▶
+</button> -->
+                        </div>
+                    </div>
+
+                    <!-- Extract Mode Controls (for pages mode) -->
+                    <div id="extractMode" class="extract-mode" style="display: none;">
+                        <h3>Extract mode:</h3>
+                        <div class="mode-buttons">
+                            <button class="mode-btn active" data-extract="all" onclick="setExtractMode('all')">Extract all pages</button>
+                            <button class="mode-btn" data-extract="select" onclick="setExtractMode('select')">Select pages</button>
+                        </div>
+                        <div class="extract-info">
+                            Selected pages will be converted into separate PDF files. <span id="pdfCount">.. PDF</span> will be created.
+                        </div>
+                    </div>
+
+
+                    <!-- Action Button -->
+                     <button id="splitBtn" onclick="splitPDF()" style="background: #e74c3c; color: white; padding: 12px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; width: 100%;">
+    Split PDF ▶
+</button>
+                   
+                </div>
+            </div>
+        </div>
+    </main>
+
+   <script src="{{ url_for('static', filename='js/split.js') }}"></script>
+</body>
+</html>

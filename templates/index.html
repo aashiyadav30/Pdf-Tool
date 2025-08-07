@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDFToolkit - PDF Tools</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+           /* Header Styles */
+        .header {
+            background: white;
+            border-bottom: 1px solid #e9ecef;
+            padding: 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .heart {
+            color: #e74c3c;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #666;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        /* .nav-menu a.active {
+            color: #e74c3c;
+            background: #fff5f5;
+        } */
+
+        .nav-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .user-icon, .menu-icon {
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            background: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <a href="{{ url_for('home') }}" class="logo">PDFToolkit</a>
+            
+            <ul class="nav-menu">
+                <li><a href="{{ url_for('merge_page') }}">MERGE PDF</a></li>
+                <li><a href="{{ url_for('split_page') }}">SPLIT PDF</a></li>
+                <li><a href="{{ url_for('compress_page') }}">COMPRESS PDF</a></li>
+                <li><a href="https://pdf-editor.vercel.app/">EDIT PDF</a></li>
+
+
+            </ul>
+
+            <div class="nav-actions">
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section class="hero-section">
+            <h1 class="hero-title">Every tool you need to work with PDFs in one place</h1>
+            <p class="hero-subtitle">
+                Every tool you need to use PDFs, at your fingertips. All are 100% FREE and easy to use!
+                Merge, split, compress PDFs with just a few clicks.
+            </p>
+        </section>
+
+        <div class="tools-grid">
+           <div class="tool-card" onclick='window.location.href="{{ url_for("merge_page") }}"'>
+                <div class="tool-icon merge-icon">📄</div>
+                <h3 class="tool-title">Merge PDF</h3>
+                <p class="tool-description">Combine PDFs in the order you want with the easiest PDF merger available.</p>
+            </div>
+
+            <div class="tool-card" onclick="window.location.href='{{ url_for('split_page') }}'">
+                <div class="tool-icon split-icon">✂️</div>
+                <h3 class="tool-title">Split PDF</h3>
+                <p class="tool-description">Separate one page or a whole set for easy conversion into independent PDF files.</p>
+            </div>
+
+            <div class="tool-card" onclick="window.location.href='{{ url_for('compress_page') }}'">
+                <div class="tool-icon compress-icon">🗜️</div>
+                <h3 class="tool-title">Compress PDF</h3>
+                <p class="tool-description">Reduce file size while optimizing for maximal PDF quality.</p>
+            </div>
+            <div class="tool-card" onclick="window.location.href='https://pdf-editor.vercel.app/'">
+    <div class="tool-icon edit-icon">🖊️</div>
+    <h3 class="tool-title">Edit PDF</h3>
+    <p class="tool-description">Make changes to your PDF with ease — add text, images, shapes, or draw directly on your pages.</p>
+</div>
+
+        </div>
+    </main>
+</body>
+</html>

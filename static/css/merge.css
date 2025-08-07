@@ -1,0 +1,354 @@
+/* File Management Interface */
+.merge-interface {
+    display: none;
+    background: white;
+    border-radius: 12px;
+    padding: 0;
+    margin-bottom: 30px;
+    overflow: hidden;
+}
+
+.merge-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    border-bottom: 1px solid #e9ecef;
+    background: #f8f9fa;
+}
+
+.merge-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+}
+
+.file-count-info {
+    background: #6c757d;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    border-bottom: 1px solid #e9ecef;
+    background: white;
+}
+
+.toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.add-files-btn {
+    background: #e53e3e;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.add-files-btn:hover {
+    background: #d53030;
+}
+
+.sort-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sort-btn {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    color: #495057;
+    transition: all 0.2s;
+}
+
+.sort-btn:hover {
+    background: #e9ecef;
+}
+
+.sort-btn.active {
+    background: #e53e3e;
+    color: white;
+    border-color: #e53e3e;
+}
+
+.toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #666;
+    font-size: 14px;
+}
+
+.file-workspace {
+    display: flex;
+    min-height: 400px;
+}
+
+.file-list-container {
+    flex: 1;
+    padding: 20px;
+    background: #f8f9fa;
+}
+
+.file-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 15px;
+}
+
+.file-card {
+    background: white;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    border: 2px solid transparent;
+    cursor: move;
+    transition: all 0.3s ease;
+    position: relative;
+    user-select: none;
+}
+
+.file-card:hover {
+    border-color: #e53e3e;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.file-card.dragging {
+    opacity: 0.5;
+    transform: rotate(5deg);
+}
+
+.file-controls {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: flex;
+    gap: 4px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.file-card:hover .file-controls {
+    opacity: 1;
+}
+
+.control-btn {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.rotate-btn {
+    background: #17a2b8;
+    color: white;
+}
+
+.rotate-btn:hover {
+    background: #138496;
+}
+
+.delete-btn {
+    background: #dc3545;
+    color: white;
+}
+
+.delete-btn:hover {
+    background: #c82333;
+}
+
+.file-preview-thumb {
+    width: 80px;
+    height: 100px;
+    background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+    border-radius: 6px;
+    margin: 0 auto 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    position: relative;
+    overflow: hidden;
+}
+
+.page-indicator {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    background: rgba(0,0,0,0.7);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 10px;
+}
+
+.file-info {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.file-name-small {
+    font-size: 11px;
+    color: #333;
+    font-weight: 500;
+    word-break: break-word;
+    line-height: 1.2;
+}
+
+.merge-panel {
+    width: 300px;
+    border-left: 1px solid #e9ecef;
+    padding: 20px;
+    background: white;
+}
+
+.merge-panel h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.merge-instructions {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 30px;
+}
+
+.merge-action-btn {
+    background: #e53e3e;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.merge-action-btn:hover {
+    background: #d53030;
+    transform: translateY(-1px);
+}
+
+.merge-action-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Drag and Drop Styling */
+.file-grid.drag-over {
+    background: #fff3cd;
+    border: 2px dashed #ffc107;
+    border-radius: 8px;
+}
+
+.drop-indicator {
+    width: 3px;
+    background: #e53e3e;
+    border-radius: 2px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.drop-indicator.show {
+    opacity: 1;
+}
+
+.back-button {
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 14px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            padding: 8px 0;
+        }
+
+        .back-button:hover {
+            color: #333;
+        }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .nav-menu {
+        display: none;
+    }
+
+    .hero-title {
+        font-size: 36px;
+    }
+
+    .tools-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .tool-card {
+        padding: 25px;
+    }
+
+    .upload-area {
+        padding: 40px 20px;
+    }
+
+    .file-workspace {
+        flex-direction: column;
+    }
+
+    .merge-panel {
+        width: 100%;
+        border-left: none;
+        border-top: 1px solid #e9ecef;
+    }
+
+    .toolbar {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+
+    .toolbar-right {
+        font-size: 12px;
+    }
+}
