@@ -90,7 +90,6 @@ Navigate to [[http://localhost:5000](http://127.0.0.1:5000)]
 
 ## 📸 Screenshots
 
-> *(Insert screenshots of the homepage, merge UI, split UI, and compress UI here)*
 > <img width="1229" height="968" alt="image" src="https://github.com/user-attachments/assets/a929ff28-d6ac-4db5-90ef-82223259cbd8" />
 > <img width="1244" height="808" alt="image" src="https://github.com/user-attachments/assets/858e603d-4fbd-44f2-bb7d-90783f6daedf" />
 > <img width="1211" height="993" alt="image" src="https://github.com/user-attachments/assets/1cc1bc3f-4ea6-42e2-b690-7ff0c9f608ba" />
